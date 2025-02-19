@@ -58,6 +58,10 @@ struct ContentView: View {
     }
     
     private func addHabit() {
+        // prevent adding empty string to list
+        if givenHabit.isEmpty {
+            return
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM dd, yyyy - h:mm:ss a"
         let currentDate = dateFormatter.string(from: Date())
