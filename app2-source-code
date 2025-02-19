@@ -1,0 +1,72 @@
+//
+//  ContentView.swift
+//  cmps3390-App2
+//
+//  Created by Bryan Rodriguez  on 2/13/25.
+//
+
+import SwiftUI
+
+struct ContentView: View {
+    @State private var givenHabit: String = ""
+    // array of tuples
+    @State private var habits: [(name: String, date: String)] = []
+    var body: some View {
+        VStack {
+            // Titles
+            Text("Habit List")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding()
+            HStack {
+                Text("Habit")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("Date")
+            }
+            .font(.title)
+            
+            // Display habits
+            ForEach(habits, id: \.name) { habit in
+                HStack {
+                    Text(habit.name)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(habit.date)
+                }
+            }
+            
+            Spacer()
+            
+            // User input
+            HStack {
+                Text("Habit:")
+                TextField(
+                    "Enter a habit",
+                    text: $givenHabit
+                )
+                .disableAutocorrection(true)
+                Button("Add") {
+                    // created func for easier reading
+                    addHabit();
+                }
+                Button("Save") {
+                }
+                Button("Load") {
+                }
+            }
+        }
+        .padding()
+    }
+    
+    private func addHabit() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy - h:mm:ss a"
+        let currentDate = dateFormatter.string(from: Date())
+        // Add to the list
+        habits.append((name: givenHabit, date: currentDate))
+        givenHabit = ""
+        }
+}
+
+#Preview {
+    ContentView()
+}
